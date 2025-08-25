@@ -12,8 +12,11 @@ class SpaceInvasionGame:
         while True:
             self.check_events()
             self.update_objects()
-            self.update_screen()
+            self.new_method()
             self.clock.tick(60)
+
+    def new_method(self):
+        self.update_screen()
 
     def check_events(self):
         for event in pygame.event.get():

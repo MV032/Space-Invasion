@@ -1,6 +1,7 @@
 import pygame
 
 class Bullet(pygame.sprite.Sprite):
+    #initialize a bullet
     def __init__(self, game):
         super().__init__()
         self.screen = game.screen
@@ -10,9 +11,11 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.midtop = game.ship.rect.midtop
         self.y = float(self.rect.y)
 
+    #moves bullet upwards
     def update(self):
         self.y -= self.settings.bullet_speed
         self.rect.y = self.y
     
+    #creates the visual bullet
     def draw_bullet(self):
         pygame.draw.rect(self.screen, self.color, self.rect)

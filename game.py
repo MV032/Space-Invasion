@@ -1,3 +1,8 @@
+# @name: Christopher Dougherty
+# @date: 8-2025
+# @title: Space Invasion
+# @desc: Simple recreation of Space Invaders in python
+
 import pygame
 import sys
 from settings import Settings

@@ -1,16 +1,18 @@
 import pygame
+from settings import Settings
 
 class Ship:
     #initializes player setup
     def __init__(self, space_game):
+        self.settings = Settings()
         self.screen = space_game.screen
         self.screen_rect = space_game.screen.get_rect()
-        self.image = pygame.image.load("ship.bmp")
+        self.image =  pygame.image.load("ship.bmp")
         self.rect = self.image.get_rect()
         self.rect.midbottom = self.screen_rect.midbottom
         self.moving_left = False
         self.moving_right = False
-        self.ship_speed = 1.5
+        self.ship_speed = 3
         self.x = float(self.rect.x)      
 
     #updates player movement every frame

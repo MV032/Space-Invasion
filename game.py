@@ -8,6 +8,7 @@ import sys
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
+from alien import Alien
 
 class SpaceInvasionGame:
     #initializes game setup
@@ -19,6 +20,8 @@ class SpaceInvasionGame:
         pygame.display.set_caption("Space Invasion")
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
+        self.aliens = pygame.sprite.Group()
+        self._create_fleet()
 
     #runs the game and updates at 60 fps
     def run_game(self):
@@ -47,6 +50,7 @@ class SpaceInvasionGame:
         self.screen.fill(self.settings.bg_color)
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+        self.aliens.draw(self.screen)
         self.ship.blitme()
         pygame.display.flip()
 
@@ -74,6 +78,26 @@ class SpaceInvasionGame:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
 
+    #spawns aliens in a grid style, keeping them on screen and above player
+    def _create_fleet(self):
+        alien = Alien(self)
+        self.aliens.add(alien)
+        alien_width, alien_height = alien.rect.size
+        current_x, current_y = alien_width, alien_height
+        while current_y < (self.settings.screen_height - (3 * alien_height)):
+            while current_x < (self.settings.screen_width - (2 * alien_width)):
+                self._make_alien(current_x, current_y)
+                current_x += 2 * alien_width
+            current_y += 2 * alien_height
+            current_x = alien_width
+    
+    #creates an alien and adds it to the alien group
+    def _make_alien(self, x, y):
+        new_alien = Alien(self)
+        new_alien.x = x
+        new_alien.rect.x = x
+        new_alien.rect.y = y
+        self.aliens.add(new_alien)
 
 if __name__ == "__main__":
     game = SpaceInvasionGame()

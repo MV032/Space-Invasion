@@ -1,10 +1,9 @@
 import pygame
-from settings import Settings
 
 class Ship:
     #initializes player setup
     def __init__(self, space_game):
-        self.settings = Settings()
+        self.settings = space_game.settings
         self.screen = space_game.screen
         self.screen_rect = space_game.screen.get_rect()
         self.image =  pygame.image.load("ship.bmp")

@@ -14,5 +14,5 @@ class Settings:
         self.player_speed = 3               #max speed of the player
 
         self.alien_direction = 1            #1 = right, -1 = left
-        self.alien_speed = 4.5              #how fast the aliens move
-        self.fleet_drop = 50                #how far the fleet goes down each time it drops
+        self.alien_speed = 2             #how fast the aliens move
+        self.fleet_drop = 10                #how far the fleet goes down each time it drops

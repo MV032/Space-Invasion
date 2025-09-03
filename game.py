@@ -32,6 +32,7 @@ class SpaceInvasionGame:
             for bullet in self.bullets.copy():
                 if bullet.rect.bottom <= 0:
                     self.bullets.remove(bullet)
+            self.aliens.update()
             self._update_screen()
             self.clock.tick(60)
 
@@ -96,7 +97,7 @@ class SpaceInvasionGame:
         new_alien = Alien(self)
         new_alien.x = x
         new_alien.rect.x = x
-        new_alien.rect.y = y
+        new_alien.rect.y = y 
         self.aliens.add(new_alien)
 
 if __name__ == "__main__":

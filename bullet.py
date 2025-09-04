@@ -13,7 +13,7 @@ class Bullet(pygame.sprite.Sprite):
 
     #moves bullet upwards
     def update(self):
-        self.y -= self.settings.bullet_speed
+        self.y -= self.settings.bullet_speed - (self.y * .1)
         self.rect.y = self.y
     
     #creates the visual bullet

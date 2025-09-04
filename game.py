@@ -9,6 +9,7 @@ from settings import Settings
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
+from time import sleep
 
 class SpaceInvasionGame:
     #initializes game setup
@@ -35,7 +36,16 @@ class SpaceInvasionGame:
             self._update_screen()
             self.clock.tick(60)
 
+    def _ship_hit(self):
+        self.bullets.empty()
+        self.aliens.empty()
+        self._create_fleet()
+        self.ship.x = (self.screen.get_width() / 2) - self.ship.rect.width / 2
+        sleep(.5)
+
     def _update_aliens(self):
+        if pygame.sprite.spritecollideany(self.ship, self.aliens):
+            self._ship_hit()
         self.aliens.update()
 
     def _check_fleet_edges(self):

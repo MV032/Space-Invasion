@@ -6,7 +6,7 @@ class Ship:
         self.settings = space_game.settings
         self.screen = space_game.screen
         self.screen_rect = space_game.screen.get_rect()
-        self.image =  pygame.image.load("ship.bmp")
+        self.image =  pygame.image.load("ship.png")
         self.rect = self.image.get_rect()
         self.rect.midbottom = self.screen_rect.midbottom
         self.moving_left = False

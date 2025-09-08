@@ -11,6 +11,7 @@ from bullet import Bullet
 from alien import Alien
 from scoreboard import Scoreboard
 from stats import Stats
+from lives import Lives
 from time import sleep
 
 class SpaceInvasionGame:
@@ -25,6 +26,7 @@ class SpaceInvasionGame:
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
         self.stats = Stats(self)
+        self.lives = Lives(self)
         self.scoreboard = Scoreboard(self)
         self._create_fleet()
 
@@ -43,6 +45,11 @@ class SpaceInvasionGame:
     def _ship_hit(self):
         self.bullets.empty()
         self.aliens.empty()
+        self.stats.ships_left -= 1
+        if self.stats.ships_left == 0:
+            self.stats.reset_stats()
+            self.scoreboard.prep_score()
+        self.lives.prep_lives()
         self._create_fleet()
         self.ship.x = (self.screen.get_width() / 2) - self.ship.rect.width / 2
         sleep(.5)
@@ -79,6 +86,7 @@ class SpaceInvasionGame:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.scoreboard.show_score()
+        self.lives.show_lives()
         self.aliens.draw(self.screen)
         self.ship.blitme()
         pygame.display.flip()

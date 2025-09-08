@@ -4,7 +4,7 @@ class Settings:
         self.screen_height = 600            #screen height (in pixels)
         self.bg_color = (13, 41, 26)        #background color of screen
 
-        self.bullet_speed = 2               #how fast the bullet goes upwards
+        self.bullet_speed = 8.              #how fast the bullet goes upwards
         self.bullet_width = 3               #how wide the bullet is (in pixels)
         self.bullet_height = 15             #how tall the bullet is (in pixels)
         self.bullet_color = (54, 181, 101)  #color of bullet (yellow)
@@ -12,7 +12,10 @@ class Settings:
 
         self.player_image = "ship.png"      #image for player ship
         self.player_speed = 3               #max speed of the player
+        self.ship_limit = 3
 
         self.alien_direction = 1            #1 = right, -1 = left
         self.alien_speed = 2                #how fast the aliens move
         self.fleet_drop = 10                #how far the fleet goes down each time it drops
+
+        self.score_color = (54, 181, 101)

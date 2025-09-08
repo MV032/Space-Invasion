@@ -9,6 +9,8 @@ from settings import Settings
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
+from scoreboard import Scoreboard
+from stats import Stats
 from time import sleep
 
 class SpaceInvasionGame:
@@ -22,6 +24,8 @@ class SpaceInvasionGame:
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
+        self.stats = Stats(self)
+        self.scoreboard = Scoreboard(self)
         self._create_fleet()
 
     #runs the game and updates at 60 fps
@@ -74,6 +78,7 @@ class SpaceInvasionGame:
         self.screen.fill(self.settings.bg_color)
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+        self.scoreboard.show_score()
         self.aliens.draw(self.screen)
         self.ship.blitme()
         pygame.display.flip()
@@ -108,6 +113,9 @@ class SpaceInvasionGame:
                 if bullet.rect.bottom <= 0:
                     self.bullets.remove(bullet)
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+        if collisions:
+            self.stats.score += 100
+            self.scoreboard.prep_score()
         if not self.aliens:
             self.bullets.empty()
             self._create_fleet()

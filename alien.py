@@ -1,5 +1,6 @@
 import pygame
 from pygame.sprite import Sprite
+from stats import Stats
 
 class Alien(Sprite):
     #initializes an alien
@@ -7,6 +8,7 @@ class Alien(Sprite):
         super().__init__()
         self.settings = game.settings
         self.screen = game.screen
+        self.stats = game.stats
         self.image = pygame.image.load("alien.png")
         self.rect = self.image.get_rect()
         self.rect.x = self.rect.width
@@ -15,7 +17,7 @@ class Alien(Sprite):
 
     #updates the aliens position based on their speed and direction
     def update(self):
-        self.x += self.settings.alien_speed * self.settings.alien_direction
+        self.x += (self.settings.alien_speed * self.settings.alien_direction) * (self.stats.round * 0.2)
         self.rect.x = self.x
 
     #checks if the alien has reached the edge of a screen, if it does change it's direction

@@ -5,4 +5,5 @@ class Stats:
 
     def reset_stats(self):
         self.ships_left = self.settings.ship_limit
+        self.round = 1
         self.score = 0

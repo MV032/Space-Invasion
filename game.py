@@ -136,6 +136,7 @@ class SpaceInvasionGame:
 
     #spawns aliens in a grid style, keeping them on screen and above player
     def _create_fleet(self):
+        self.stats.round += 1
         alien = Alien(self)
         self.aliens.add(alien)
         alien_width, alien_height = alien.rect.size

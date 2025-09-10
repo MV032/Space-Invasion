@@ -5,6 +5,8 @@
 
 import pygame
 import sys
+import random
+from time import sleep
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
@@ -12,7 +14,7 @@ from alien import Alien
 from scoreboard import Scoreboard
 from stats import Stats
 from lives import Lives
-from time import sleep
+from powerup import Powerup
 
 class SpaceInvasionGame:
     #initializes game setup
@@ -26,6 +28,7 @@ class SpaceInvasionGame:
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
         self.stats = Stats(self)
+        self.powerup = Powerup(self)
         self.lives = Lives(self)
         self.scoreboard = Scoreboard(self)
         self._create_fleet()
@@ -127,6 +130,7 @@ class SpaceInvasionGame:
                 if bullet.rect.bottom <= 0:
                     self.bullets.remove(bullet)
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+        
         if collisions:
             self.stats.score += 100
             self.scoreboard.prep_score()

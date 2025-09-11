@@ -27,6 +27,7 @@ class SpaceInvasionGame:
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
+        self.powerups = pygame.sprite.Group()
         self.stats = Stats(self)
         self.powerup = Powerup(self)
         self.lives = Lives(self)
@@ -42,12 +43,14 @@ class SpaceInvasionGame:
             self._update_bullets()
             self._check_fleet_edges()
             self._update_aliens()
+            self._update_powerups()
             self._update_screen()
             self.clock.tick(60)
 
     def _ship_hit(self):
         self.bullets.empty()
         self.aliens.empty()
+        self.powerups.empty()
         self.stats.ships_left -= 1
         if self.stats.ships_left == 0:
             self.stats.reset_stats()
@@ -67,6 +70,9 @@ class SpaceInvasionGame:
                 return
 
         self.aliens.update()
+
+    def _update_powerups(self):
+        self.powerups.update()
 
     def _check_fleet_edges(self):
         for alien in self.aliens.sprites():
@@ -97,14 +103,15 @@ class SpaceInvasionGame:
         self.scoreboard.show_score()
         self.lives.show_lives()
         self.aliens.draw(self.screen)
+        self.powerups.draw(self.screen)
         self.ship.blitme()
         pygame.display.flip()
 
     #check which key is pressed and associate that to an event
     def _check_key_down(self, event):
-        if event.key == pygame.K_RIGHT:
+        if event.key == pygame.K_d:
             self.ship.moving_right = True
-        elif event.key == pygame.K_LEFT:
+        elif event.key == pygame.K_a:
             self.ship.moving_left = True
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
@@ -113,9 +120,9 @@ class SpaceInvasionGame:
 
     #check when a key is released to stop player movement
     def _check_key_up(self, event):
-        if event.key == pygame.K_RIGHT:
+        if event.key == pygame.K_d:
             self.ship.moving_right = False
-        elif event.key == pygame.K_LEFT:
+        elif event.key == pygame.K_a:
             self.ship.moving_left = False
     
     #creates a new bullet and adds it to the bullets group
@@ -132,6 +139,14 @@ class SpaceInvasionGame:
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
         
         if collisions:
+            for sprite, sprites_hit in collisions.items():
+                for sprite2 in sprites_hit:
+                    collision_rect = sprite.rect.clip(sprite2.rect)
+                    collision_center_x = collision_rect.centerx
+                    collision_center_y = collision_rect.centery
+                    new_powerup = Powerup(self, 1, collision_center_x, collision_center_y)
+                    self.powerups.add(new_powerup)
+
             self.stats.score += 100
             self.scoreboard.prep_score()
         if not self.aliens:

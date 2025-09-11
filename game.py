@@ -139,19 +139,26 @@ class SpaceInvasionGame:
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
         
         if collisions:
-            for sprite, sprites_hit in collisions.items():
-                for sprite2 in sprites_hit:
-                    collision_rect = sprite.rect.clip(sprite2.rect)
-                    collision_center_x = collision_rect.centerx
-                    collision_center_y = collision_rect.centery
-                    new_powerup = Powerup(self, 1, collision_center_x, collision_center_y)
-                    self.powerups.add(new_powerup)
-
             self.stats.score += 100
             self.scoreboard.prep_score()
-        if not self.aliens:
-            self.bullets.empty()
-            self._create_fleet()
+            if not self.aliens:
+                self.bullets.empty()
+                self._create_fleet()
+            
+            #spawn powerups
+            
+            rand1 = random.randint(1,10)
+            if rand1 == 1:
+                rand2 = random.randint(1,3)
+                for sprite, sprites_hit in collisions.items():
+                    for sprite2 in sprites_hit:
+                        collision_rect = sprite.rect.clip(sprite2.rect)
+                        collision_center_x = collision_rect.centerx
+                        collision_center_y = collision_rect.centery
+                        new_powerup = Powerup(self, rand2, collision_center_x, collision_center_y)
+                        self.powerups.add(new_powerup)
+
+       
 
     #spawns aliens in a grid style, keeping them on screen and above player
     def _create_fleet(self):

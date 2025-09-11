@@ -72,7 +72,7 @@ class SpaceInvasionGame:
         self.aliens.update()
 
     def _update_powerups(self):
-        self.powerups.update()
+        self.powerups.update()         
 
     def _check_fleet_edges(self):
         for alien in self.aliens.sprites():
@@ -145,9 +145,8 @@ class SpaceInvasionGame:
                 self.bullets.empty()
                 self._create_fleet()
             
-            #spawn powerups
-            
-            rand1 = random.randint(1,10)
+            #spawn powerups        
+            rand1 = random.randint(1,20)
             if rand1 == 1:
                 rand2 = random.randint(1,3)
                 for sprite, sprites_hit in collisions.items():

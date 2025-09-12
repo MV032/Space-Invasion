@@ -8,11 +8,11 @@ class Ship:
         self.screen_rect = space_game.screen.get_rect()
         self.image =  pygame.image.load("ship.png")
         self.rect = self.image.get_rect()
-        self.rect.midbottom = self.screen_rect.midbottom
+        self.rect.y = self.screen.get_height() - 100
         self.moving_left = False
         self.moving_right = False
         self.ship_speed = 3
-        self.x = float(self.rect.x)      
+        self.x = (self.screen.get_width() / 2) - self.rect.width / 2
 
     #updates player movement every frame
     def update(self):

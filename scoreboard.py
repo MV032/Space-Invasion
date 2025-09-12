@@ -6,15 +6,23 @@ class Scoreboard:
         self.screen_rect = self.screen.get_rect()
         self.settings = game.settings
         self.stats = game.stats
-        self.font = pygame.font.SysFont(None, 48)
+        self.font = pygame.font.Font("press_start_2p_font.ttf", 28)
         self.prep_score()
 
     def prep_score(self):
+        #score title
+        self.title_image = self.font.render("SCORE", True, (255,255,255), self.settings.bg_color)
+        self.title_rect = self.title_image.get_rect()
+        self.title_rect.right = self.screen_rect.right - 20
+        self.title_rect.top = 20
+
+        #score number
         score_str = str(self.stats.score)
         self.score_image = self.font.render(score_str, True, self.settings.score_color, self.settings.bg_color)
         self.score_rect = self.score_image.get_rect()
         self.score_rect.right = self.screen_rect.right - 20
-        self.score_rect.top = 20
+        self.score_rect.top = 60
 
     def show_score(self):
         self.screen.blit(self.score_image, self.score_rect)
+        self.screen.blit(self.title_image, self.title_rect)

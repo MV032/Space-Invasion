@@ -1,7 +1,7 @@
 class Settings:
     def __init__(self):
-        self.screen_width = 800            #screen width (in pixels)
-        self.screen_height = 1000            #screen height (in pixels)
+        self.screen_width = 700            #screen width (in pixels)
+        self.screen_height = 800            #screen height (in pixels)
         self.bg_color = "Black"             #background color of screen
 
         self.bullet_speed = 8.              #how fast the bullet goes upwards

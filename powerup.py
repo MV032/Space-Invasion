@@ -1,7 +1,7 @@
 import pygame
 
 class Powerup(pygame.sprite.Sprite):
-    def __init__(self, game, num=1, x=0, y=0):
+    def __init__(self, game, num, x, y):
         super().__init__()
         self.settings = game.settings
         self.screen = game.screen
@@ -12,7 +12,6 @@ class Powerup(pygame.sprite.Sprite):
         self.rect.y = y
         self.x = float(self.rect.x)
         self.y = float(self.rect.y)
-        self.reset_power_ups()
         
     def _load_image(self, num):
         image = "ammo.png"
@@ -34,11 +33,12 @@ class Powerup(pygame.sprite.Sprite):
         self.settings.bullet_width = 3
         self.settings.bullet_height = 15
 
-    def activate_power_up(self, num):
-        if num == 1: #speed
+    def activate_power_up(self):
+        print("ACTIVATED " + str(self.num))
+        if self.num == 1: #speed
             self.settings.player_speed = 8
-        elif num == 2: #ammo
-            self.settings.bullets_allowed = 10
-        elif num == 3: #super bullet
+        elif self.num == 2: #ammo
+            self.settings.bullets_allowed = 5
+        elif self.num == 3: #super bullet
             self.settings.bullet_width = 9
             self.settings.bullet_height = 45

@@ -29,7 +29,6 @@ class SpaceInvasionGame:
         self.aliens = pygame.sprite.Group()
         self.powerups = pygame.sprite.Group()
         self.stats = Stats(self)
-        self.powerup = Powerup(self)
         self.lives = Lives(self)
         self.scoreboard = Scoreboard(self)
         self._create_fleet()
@@ -38,7 +37,7 @@ class SpaceInvasionGame:
     def run_game(self):
         while True:
             self._check_events()
-            self.ship.update()
+            self.ship.update(self)
             self.bullets.update()
             self._update_bullets()
             self._check_fleet_edges()
@@ -72,6 +71,10 @@ class SpaceInvasionGame:
         self.aliens.update()
 
     def _update_powerups(self):
+        hit_sprites = pygame.sprite.spritecollide(self.ship, self.powerups, True)
+        for sprite in hit_sprites:
+            sprite.activate_power_up()
+
         self.powerups.update()         
 
     def _check_fleet_edges(self):
@@ -127,7 +130,7 @@ class SpaceInvasionGame:
     
     #creates a new bullet and adds it to the bullets group
     def _fire_bullet(self):
-        if len(self.bullets) < 3: #no more than 3 bullets at a time
+        if len(self.bullets) < self.settings.bullets_allowed: #no more than 3 bullets at a time
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
 
@@ -146,7 +149,7 @@ class SpaceInvasionGame:
                 self._create_fleet()
             
             #spawn powerups        
-            rand1 = random.randint(1,20)
+            rand1 = random.randint(1,10)
             if rand1 == 1:
                 rand2 = random.randint(1,3)
                 for sprite, sprites_hit in collisions.items():
@@ -157,10 +160,11 @@ class SpaceInvasionGame:
                         new_powerup = Powerup(self, rand2, collision_center_x, collision_center_y)
                         self.powerups.add(new_powerup)
 
-       
+
 
     #spawns aliens in a grid style, keeping them on screen and above player
     def _create_fleet(self):
+        Powerup.reset_power_ups(self)
         self.stats.round += 1
         alien = Alien(self)
         self.aliens.add(alien)

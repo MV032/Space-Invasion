@@ -15,11 +15,11 @@ class Ship:
         self.x = (self.screen.get_width() / 2) - self.rect.width / 2
 
     #updates player movement every frame
-    def update(self):
+    def update(self, game):
         if self.moving_left and self.rect.left > 0:
-            self.x -= self.ship_speed
+            self.x -= game.settings.player_speed
         elif self.moving_right and self.rect.right < self.screen_rect.right:
-            self.x += self.ship_speed
+            self.x += game.settings.player_speed
         self.rect.x = self.x
     
     def blitme(self):
